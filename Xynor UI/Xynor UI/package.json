@@ -1,0 +1,76 @@
+{
+  "name": "xynor-ide",
+  "version": "1.0.0",
+  "description": "Xynor - A minimal Electron-based IDE with Monaco Editor",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "keywords": [
+    "electron",
+    "ide",
+    "monaco",
+    "editor"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.xynor.ide",
+    "productName": "Xynor IDE",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "build/icon.icns",
+      "category": "public.app-category.developer-tools"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "build/icon.png",
+      "category": "Development"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "dependencies": {
+    "@codingame/monaco-jsonrpc": "^0.4.1",
+    "@codingame/monaco-languageclient": "^0.17.4",
+    "express": "^5.1.0",
+    "koffi": "^2.14.1",
+    "reconnecting-websocket": "^4.4.0",
+    "sharp": "^0.34.5",
+    "vscode-languageserver": "^9.0.1",
+    "vscode-ws-jsonrpc": "^3.5.0",
+    "ws": "^8.18.3"
+  }
+}

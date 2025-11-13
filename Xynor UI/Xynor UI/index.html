@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xynor IDE</title>
+  <link rel="stylesheet" href="vs/editor/editor.main.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: #0d0d15;
+      color: #b8b8c8;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    #titlebar {
+      background-color: #0a0a12;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      -webkit-app-region: drag;
+      border-bottom: 1px solid #2a2a3e;
+      border-radius: 10px 10px 0 0;
+    }
+
+    #titlebar .title {
+      font-size: 12px;
+      font-weight: 400;
+      color: #b8b8c8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    #titlebar .title img {
+      height: 16px;
+      width: 16px;
+      object-fit: contain;
+    }
+
+    #titlebar .windowcontrols {
+      display: flex;
+      gap: 10px;
+      -webkit-app-region: no-drag;
+    }
+
+    #titlebar .windowcontrols button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      padding: 0;
+      border: none;
+      cursor: pointer;
+      min-width: 12px;
+      min-height: 12px;
+    }
+
+    #titlebar .windowcontrols #closebtn {
+      background-color: #ff5f56;
+    }
+
+    #titlebar .windowcontrols #minimizebtn {
+      background-color: #ffbd2e;
+    }
+
+    #titlebar .windowcontrols #maximizebtn {
+      background-color: #27c93f;
+    }
+
+    #tabbar {
+      background-color: #15151f;
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      border-bottom: 1px solid #2a2a3e;
+      height: 35px;
+    }
+
+    #tabbar::-webkit-scrollbar {
+      height: 3px;
+    }
+
+    #tabbar::-webkit-scrollbar-thumb {
+      background-color: #3a3a4e;
+    }
+
+    .tab {
+      background-color: #15151f;
+      color: #7a7a8a;
+      border: none;
+      padding: 0 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      border-right: 1px solid #0a0a12;
+      white-space: nowrap;
+      height: 35px;
+    }
+
+    .tab:hover {
+      background-color: #1a1a28;
+    }
+
+    .tab.active {
+      background-color: #0d0d15;
+      color: #e8e8f8;
+      border-bottom: 2px solid #8855cc;
+    }
+
+    .tab .closetab {
+      margin-left: 4px;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+      opacity: 0;
+      font-size: 16px;
+    }
+
+    .tab:hover .closetab {
+      opacity: 0.6;
+    }
+
+    .tab .closetab:hover {
+      opacity: 1;
+      background-color: #8855cc;
+    }
+
+    #newtabbtn {
+      background-color: #15151f;
+      color: #9977dd;
+      border: none;
+      padding: 0 12px;
+      cursor: pointer;
+      font-size: 16px;
+      flex-shrink: 0;
+      height: 35px;
+    }
+
+    #newtabbtn:hover {
+      background-color: #1a1a28;
+    }
+
+    #maincontent {
+      display: flex;
+      height: calc(100vh - 30px - 50px);
+      transition: height 0.2s ease;
+    }
+
+    #maincontent.withterminal {
+      height: calc(100vh - 30px - 50px - 180px);
+    }
+
+    #sidebar {
+      width: 48px;
+      background-color: #0a0a12;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 5px 0;
+      gap: 0;
+      border-right: 1px solid #2a2a3e;
+    }
+
+    .sidebaricon {
+      width: 48px;
+      height: 48px;
+      background-color: transparent;
+      border: none;
+      color: #6a6a7a;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-left: 2px solid transparent;
+    }
+
+    .sidebaricon:hover {
+      color: #9977dd;
+    }
+
+    .sidebaricon.active {
+      color: #9977dd;
+      border-left-color: #8855cc;
+    }
+
+    #contentarea {
+      flex: 1;
+      position: relative;
+      display: flex;
+    }
+
+    .view {
+      display: none;
+      flex: 1;
+      height: 100%;
+    }
+
+    .view.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #editorview {
+      background-color: #0d0d15;
+    }
+
+    #editorcontainer {
+      flex: 1;
+    }
+
+    #scripthubview {
+      background-color: #0d0d15;
+      overflow-y: auto;
+    }
+
+    #scripthubheader {
+      background-color: #0a0a12;
+      padding: 12px;
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid #2a2a3e;
+    }
+
+    #searchinput {
+      flex: 1;
+      background-color: #15151f;
+      border: 1px solid #3a3a4e;
+      color: #b8b8c8;
+      padding: 6px 10px;
+      border-radius: 2px;
+      font-size: 13px;
+    }
+
+    #searchinput:focus {
+      outline: none;
+      border-color: #8855cc;
+      box-shadow: 0 0 3px rgba(136, 85, 204, 0.2);
+    }
+
+    #searchbtn {
+      background-color: #8855cc;
+      color: #ffffff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    #searchbtn:hover {
+      background-color: #9966dd;
+    }
+
+    #scripthubfilters {
+      background-color: #0a0a12;
+      padding: 8px 12px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      border-bottom: 1px solid #2a2a3e;
+      flex-wrap: wrap;
+    }
+
+    #scripthubfilters select {
+      background-color: #15151f;
+      border: 1px solid #3a3a4e;
+      color: #b8b8c8;
+      padding: 4px 8px;
+      border-radius: 2px;
+      font-size: 12px;
+    }
+
+    #scripthubfilters label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: #b8b8c8;
+    }
+
+    #scripthubfilters input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: #8855cc;
+    }
+
+    #trendingbtn {
+      background-color: #15151f;
+      color: #9977dd;
+      border: 1px solid #3a3a4e;
+      padding: 4px 10px;
+      border-radius: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+    }
+
+    #trendingbtn:hover {
+      background-color: #1f1f2e;
+      border-color: #8855cc;
+    }
+
+    #scriptlist {
+      padding: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+      overflow-y: auto;
+      max-height: calc(100vh - 30px - 50px - 55px - 45px - 50px);
+    }
+
+    .scriptcard {
+      background-color: #0a0a12;
+      border: 1px solid #2a2a3e;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .scriptcard:hover {
+      background-color: #12121a;
+      border-color: #8855cc;
+      box-shadow: 0 0 8px rgba(136, 85, 204, 0.15);
+    }
+
+    .scriptcard img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      margin-bottom: 8px;
+    }
+
+    .scriptcard .scripttitle {
+      font-size: 13px;
+      font-weight: 500;
+      color: #d8d8e8;
+      margin-bottom: 4px;
+    }
+
+    .scriptcard .scriptgame {
+      font-size: 12px;
+      color: #7a7a8a;
+      margin-bottom: 6px;
+    }
+
+    .scriptcard .scriptmeta {
+      display: flex;
+      gap: 8px;
+      font-size: 11px;
+      color: #7a7a8a;
+    }
+
+    .scriptcard .verified {
+      color: #9977dd;
+    }
+
+    #scriptpagination {
+      background-color: #0a0a12;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid #2a2a3e;
+    }
+
+    #scriptpagination button {
+      background-color: #15151f;
+      color: #9977dd;
+      border: 1px solid #3a3a4e;
+      padding: 5px 12px;
+      border-radius: 2px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    #scriptpagination button:hover:not(:disabled) {
+      background-color: #1f1f2e;
+      border-color: #8855cc;
+    }
+
+    #scriptpagination button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    #scriptpagination #pageinfo {
+      font-size: 12px;
+      color: #b8b8c8;
+    }
+
+    #toolbar {
+      background-color: #8855cc;
+      padding: 1px 10px;
+      display: flex;
+      gap: 6px;
+      border-top: 1px solid #2a2a3e;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      border-radius: 0 0 10px 10px;
+    }
+
+    #toolbar button {
+      background-color: transparent;
+      color: #ffffff;
+      border: none;
+      padding: 5px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+    }
+
+    #toolbar button:hover {
+      background-color: #8855cc;
+    }
+
+    #toolbar button i {
+      width: 14px;
+      height: 14px;
+    }
+
+    #clientspanel {
+      width: 0;
+      background-color: #0d0d15;
+      border-left: 1px solid #2a2a3e;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: width 0.2s ease;
+    }
+
+    #clientspanel.active {
+      width: 280px;
+    }
+
+    #clientsheader {
+      background-color: #0a0a12;
+      padding: 14px 16px;
+      border-bottom: 1px solid #2a2a3e;
+      font-size: 13px;
+      font-weight: 600;
+      color: #e8e8f8;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #clientsheader i {
+      width: 16px;
+      height: 16px;
+      color: #9977dd;
+    }
+
+    #clientslist {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    #clientslist::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #clientslist::-webkit-scrollbar-track {
+      background: #0d0d15;
+    }
+
+    #clientslist::-webkit-scrollbar-thumb {
+      background: #3a3a4e;
+      border-radius: 3px;
+    }
+
+    #clientslist::-webkit-scrollbar-thumb:hover {
+      background: #4a4a5e;
+    }
+
+    .clientitem {
+      background-color: #0a0a12;
+      border: 1px solid #2a2a3e;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: 4px;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .clientitem:hover {
+      background-color: #12121a;
+      border-color: #8855cc;
+      box-shadow: 0 0 8px rgba(136, 85, 204, 0.15);
+      transform: translateX(-2px);
+    }
+
+    .clientitem input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: #8855cc;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .clientitem .clientinfo {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .clientitem .clientname {
+      color: #d8d8e8;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .clientitem .clientstatus {
+      color: #7a7a8a;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .clientitem .statusdot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #27c93f;
+      box-shadow: 0 0 4px rgba(39, 201, 63, 0.5);
+    }
+
+    #terminalpanel {
+      position: fixed;
+      bottom: 50px;
+      left: 48px;
+      right: 0;
+      height: 0;
+      background-color: #0a0a12;
+      border-top: 1px solid #2a2a3e;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: height 0.2s ease;
+      z-index: 999;
+    }
+
+    #terminalpanel.active {
+      height: 180px;
+    }
+
+    #terminalheader {
+      background-color: #15151f;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #2a2a3e;
+      flex-shrink: 0;
+    }
+
+    #terminaltitle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #d8d8e8;
+    }
+
+    #terminaltitle i {
+      width: 14px;
+      height: 14px;
+      color: #9977dd;
+    }
+
+    #clearterminal {
+      background-color: transparent;
+      border: none;
+      color: #7a7a8a;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+    }
+
+    #clearterminal:hover {
+      background-color: #1a1a28;
+      color: #9977dd;
+    }
+
+    #clearterminal i {
+      width: 14px;
+      height: 14px;
+    }
+
+    #terminaloutput {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 12px;
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      font-size: 12px;
+      color: #b8b8c8;
+      line-height: 1.5;
+    }
+
+    #terminaloutput::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #terminaloutput::-webkit-scrollbar-track {
+      background: #0a0a12;
+    }
+
+    #terminaloutput::-webkit-scrollbar-thumb {
+      background: #3a3a4e;
+      border-radius: 4px;
+    }
+
+    #terminaloutput::-webkit-scrollbar-thumb:hover {
+      background: #4a4a5e;
+    }
+
+    .terminalline {
+      margin-bottom: 2px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .terminalline.error {
+      color: #ff5f56;
+    }
+
+    .terminalline.success {
+      color: #27c93f;
+    }
+
+    .terminalline.info {
+      color: #9977dd;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="titlebar">
+    <div class="title">
+      <img src="file_00000000e9cc61f5bb711020a8abc4c8.webp" alt="Xynor Logo">
+      Xynor IDE
+    </div>
+    <div class="windowcontrols">
+      <button class="closebtn" id="closebtn"></button>
+      <button class="minimizebtn" id="minimizebtn"></button>
+      <button class="maximizebtn" id="maximizebtn"></button>
+    </div>
+  </div>
+  <div id="maincontent">
+    <div id="sidebar">
+      <button class="sidebaricon active" id="editoricon" title="Editor">
+        <i data-lucide="code"></i>
+      </button>
+      <button class="sidebaricon" id="scripthubicon" title="Script Hub">
+        <i data-lucide="package"></i>
+      </button>
+      <button class="sidebaricon" id="clientsicon" title="Connected Clients">
+        <i data-lucide="computer"></i>
+      </button>
+      <button class="sidebaricon" id="terminalicon" title="Terminal">
+        <i data-lucide="terminal"></i>
+      </button>
+    </div>
+    <div id="contentarea">
+      <div id="clientspanel">
+        <div id="clientsheader">
+          <i data-lucide="computer"></i>
+          Connected Clients
+        </div>
+        <div id="clientslist">
+          <div class="clientitem">
+            <input type="checkbox" id="client1">
+            <div class="clientinfo">
+              <div class="clientname">Placeholder</div>
+              <div class="clientstatus">
+                <span class="statusdot"></span>
+                Roblox - Connected
+              </div>
+            </div>
+          </div>
+          <div class="clientitem">
+            <input type="checkbox" id="client2">
+            <div class="clientinfo">
+              <div class="clientname">Placeholder</div>
+              <div class="clientstatus">
+                <span class="statusdot"></span>
+                Roblox - Connected
+              </div>
+            </div>
+          </div>
+          <div class="clientitem">
+            <input type="checkbox" id="client3">
+            <div class="clientinfo">
+              <div class="clientname">Placeholder</div>
+              <div class="clientstatus">
+                <span class="statusdot"></span>
+                Roblox - Connected
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="editorview" class="view active">
+        <div id="tabbar"></div>
+        <div id="editorcontainer"></div>
+      </div>
+      <div id="scripthubview" class="view">
+        <div id="scripthubheader">
+          <input type="text" id="searchinput" placeholder="Search scripts...">
+          <button id="searchbtn"><i data-lucide="search"></i></button>
+        </div>
+        <div id="scripthubfilters">
+          <select id="sortby">
+            <option value="updatedAt">Updated</option>
+            <option value="views">Views</option>
+            <option value="likeCount">Likes</option>
+            <option value="createdAt">Created</option>
+          </select>
+          <select id="scripttype">
+            <option value="">All Types</option>
+            <option value="free">Free</option>
+            <option value="paid">Paid</option>
+          </select>
+          <label><input type="checkbox" id="verifiedonly"> Verified</label>
+          <label><input type="checkbox" id="universalonly"> Universal</label>
+          <button id="trendingbtn"><i data-lucide="trending-up"></i> Trending</button>
+        </div>
+        <div id="scriptlist"></div>
+        <div id="scriptpagination">
+          <button id="prevpage">Previous</button>
+          <span id="pageinfo">Page 1</span>
+          <button id="nextpage">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="terminalpanel">
+    <div id="terminalheader">
+      <div id="terminaltitle">
+        <i data-lucide="terminal"></i>
+        Terminal Output
+      </div>
+      <button id="clearterminal" title="Clear Terminal">
+        <i data-lucide="trash-2"></i>
+      </button>
+    </div>
+    <div id="terminaloutput"></div>
+  </div>
+  <div id="toolbar">
+    <button id="clearbtn">
+      <i data-lucide="trash-2"></i>
+      Clear
+    </button>
+    <button id="attachbtn">
+      <i data-lucide="link"></i>
+      Attach
+    </button>
+    <button id="executebtn">
+      <i data-lucide="play"></i>
+      Execute
+    </button>
+    <button id="openbtn">
+      <i data-lucide="folder-open"></i>
+      Open
+    </button>
+    <button id="savebtn">
+      <i data-lucide="save"></i>
+      Save
+    </button>
+  </div>
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+  <script src="vs/loader.js"></script>
+  <script src="lsp-client.js"></script>
+  <script>
+    let editor;
+    let tabs = [];
+    let activetabid = null;
+    let currentpage = 1;
+    let totalpages = 1;
+    let currentsearchquery = '';
+    let currentview = 'editor';
+
+    require.config({ paths: { vs: 'vs' } });
+
+    require(['vs/editor/editor.main', 'vs/basic-languages/lua/lua'], function(_, lualanguage) {
+      monaco.languages.register({ id: 'lua' });
+      monaco.languages.setMonarchTokensProvider('lua', lualanguage.language);
+      monaco.languages.setLanguageConfiguration('lua', lualanguage.conf);
+      
+      monaco.languages.registerCompletionItemProvider('lua', createrobloxcompletions(monaco));
+      monaco.editor.defineTheme('xynortheme', {
+        base: 'vs-dark',
+        inherit: true,
+        rules: [
+          { token: 'comment', foreground: '6a9955', fontStyle: 'italic' },
+          { token: 'comment.line', foreground: '6a9955', fontStyle: 'italic' },
+          { token: 'comment.block', foreground: '6a9955', fontStyle: 'italic' },
+          { token: 'keyword', foreground: '9977dd', fontStyle: 'bold' },
+          { token: 'keyword.control', foreground: 'aa88ee', fontStyle: 'bold' },
+          { token: 'keyword.operator', foreground: '9977dd' },
+          { token: 'string', foreground: 'ce9178' },
+          { token: 'string.quoted', foreground: 'ce9178' },
+          { token: 'string.regexp', foreground: 'd16969' },
+          { token: 'number', foreground: 'b5cea8' },
+          { token: 'number.hex', foreground: 'b5cea8' },
+          { token: 'number.float', foreground: 'b5cea8' },
+          { token: 'function', foreground: 'dcdcaa', fontStyle: 'bold' },
+          { token: 'identifier.function', foreground: 'dcdcaa', fontStyle: 'bold' },
+          { token: 'support.function', foreground: 'dcdcaa', fontStyle: 'bold' },
+          { token: 'entity.name.function', foreground: 'dcdcaa', fontStyle: 'bold' },
+          { token: 'variable', foreground: '9cdcfe' },
+          { token: 'variable.parameter', foreground: '9cdcfe' },
+          { token: 'variable.other', foreground: '9cdcfe' },
+          { token: 'type', foreground: '4ec9b0', fontStyle: 'bold' },
+          { token: 'class', foreground: '4ec9b0', fontStyle: 'bold' },
+          { token: 'entity.name.type', foreground: '4ec9b0', fontStyle: 'bold' },
+          { token: 'entity.name.class', foreground: '4ec9b0', fontStyle: 'bold' },
+          { token: 'constant', foreground: '4fc1ff' },
+          { token: 'constant.language', foreground: '569cd6' },
+          { token: 'constant.numeric', foreground: 'b5cea8' },
+          { token: 'operator', foreground: 'd4d4d4' },
+          { token: 'delimiter', foreground: 'd4d4d4' },
+          { token: 'tag', foreground: '569cd6' },
+          { token: 'tag.id', foreground: '9cdcfe' },
+          { token: 'tag.class', foreground: '9cdcfe' },
+          { token: 'attribute.name', foreground: '9cdcfe' },
+          { token: 'attribute.value', foreground: 'ce9178' },
+          { token: 'keyword.lua', foreground: '9977dd', fontStyle: 'bold' },
+          { token: 'support.function.lua', foreground: 'dcdcaa', fontStyle: 'bold' },
+          { token: 'support.function.library.lua', foreground: 'dcdcaa', fontStyle: 'bold' }
+        ],
+        colors: {
+          'editor.background': '#0d0d15',
+          'editor.foreground': '#c8c8d8',
+          'editorLineNumber.foreground': '#5a5a6a',
+          'editorLineNumber.activeForeground': '#9977dd',
+          'editor.selectionBackground': '#8855cc40',
+          'editor.inactiveSelectionBackground': '#8855cc20',
+          'editorCursor.foreground': '#9977dd',
+          'editor.lineHighlightBackground': '#12121a',
+          'editorWidget.background': '#0a0a12',
+          'editorWidget.border': '#3a3a4e',
+          'editorSuggestWidget.background': '#0a0a12',
+          'editorSuggestWidget.border': '#3a3a4e',
+          'editorSuggestWidget.selectedBackground': '#8855cc30',
+          'editorSuggestWidget.foreground': '#c8c8d8',
+          'editorSuggestWidget.highlightForeground': '#dcdcaa',
+          'scrollbarSlider.background': '#3a3a4e60',
+          'scrollbarSlider.hoverBackground': '#4a4a5e80',
+          'scrollbarSlider.activeBackground': '#5a5a6ea0',
+          'editorBracketMatch.background': '#8855cc30',
+          'editorBracketMatch.border': '#8855cc'
+        }
+      });
+
+      editor = monaco.editor.create(document.getElementById('editorcontainer'), {
+        value: '',
+        language: 'lua',
+        theme: 'xynortheme',
+        automaticLayout: true,
+        fontSize: 14,
+        minimap: { enabled: true },
+        scrollBeyondLastLine: false,
+        wordWrap: 'on',
+        smoothScrolling: true,
+        cursorSmoothCaretAnimation: 'on',
+        cursorBlinking: 'smooth',
+        renderWhitespace: 'selection',
+        fontLigatures: true,
+        suggestOnTriggerCharacters: true,
+        quickSuggestions: {
+          other: true,
+          comments: false,
+          strings: false
+        },
+        acceptSuggestionOnEnter: 'on',
+        tabCompletion: 'on',
+        wordBasedSuggestions: true,
+        bracketPairColorization: {
+          enabled: true
+        },
+        guides: {
+          bracketPairs: true,
+          indentation: true
+        },
+        semanticHighlighting: {
+          enabled: true
+        },
+        'semanticTokenColorCustomizations': {
+          enabled: true
+        }
+      });
+
+      createnewtab('untitled.lua', '', 'lua');
+
+      document.getElementById('clearbtn').addEventListener('click', clearhandler);
+      document.getElementById('attachbtn').addEventListener('click', attachhandler);
+      document.getElementById('executebtn').addEventListener('click', executehandler);
+      document.getElementById('openbtn').addEventListener('click', openhandler);
+      document.getElementById('savebtn').addEventListener('click', savehandler);
+      
+      initializehyperion();
+      
+      document.getElementById('closebtn').addEventListener('click', () => {
+        window.electronapi.closewindow();
+      });
+      document.getElementById('minimizebtn').addEventListener('click', () => {
+        window.electronapi.minimizewindow();
+      });
+      document.getElementById('maximizebtn').addEventListener('click', () => {
+        window.electronapi.maximizewindow();
+      });
+
+      document.getElementById('editoricon').addEventListener('click', () => switchview('editor'));
+      document.getElementById('scripthubicon').addEventListener('click', () => switchview('scripthub'));
+      document.getElementById('clientsicon').addEventListener('click', toggleclientspanel);
+      document.getElementById('terminalicon').addEventListener('click', toggleterminal);
+      document.getElementById('clearterminal').addEventListener('click', clearterminaloutput);
+      document.getElementById('searchbtn').addEventListener('click', searchscripts);
+      document.getElementById('searchinput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') searchscripts();
+      });
+      document.getElementById('trendingbtn').addEventListener('click', fetchtrending);
+      document.getElementById('prevpage').addEventListener('click', () => changepage(-1));
+      document.getElementById('nextpage').addEventListener('click', () => changepage(1));
+      
+      fetchscripts();
+    });
+
+    function switchview(view) {
+      currentview = view;
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('editoricon').classList.remove('active');
+      document.getElementById('scripthubicon').classList.remove('active');
+      
+      if (view === 'editor') {
+        document.getElementById('editorview').classList.add('active');
+        document.getElementById('editoricon').classList.add('active');
+      } else {
+        document.getElementById('scripthubview').classList.add('active');
+        document.getElementById('scripthubicon').classList.add('active');
+      }
+      lucide.createIcons();
+    }
+
+    function toggleclientspanel() {
+      const panel = document.getElementById('clientspanel');
+      const icon = document.getElementById('clientsicon');
+      
+      if (panel.classList.contains('active')) {
+        panel.classList.remove('active');
+        icon.classList.remove('active');
+      } else {
+        panel.classList.add('active');
+        icon.classList.add('active');
+      }
+      lucide.createIcons();
+    }
+
+    function toggleterminal() {
+      const panel = document.getElementById('terminalpanel');
+      const icon = document.getElementById('terminalicon');
+      const maincontent = document.getElementById('maincontent');
+      
+      if (panel.classList.contains('active')) {
+        panel.classList.remove('active');
+        icon.classList.remove('active');
+        maincontent.classList.remove('withterminal');
+      } else {
+        panel.classList.add('active');
+        icon.classList.add('active');
+        maincontent.classList.add('withterminal');
+      }
+      lucide.createIcons();
+    }
+
+    function clearterminaloutput() {
+      const output = document.getElementById('terminaloutput');
+      output.innerHTML = '';
+    }
+
+    function appendterminal(message, type = 'normal') {
+      const output = document.getElementById('terminaloutput');
+      const line = document.createElement('div');
+      line.className = 'terminalline';
+      if (type !== 'normal') {
+        line.classList.add(type);
+      }
+      const timestamp = new Date().toLocaleTimeString();
+      line.textContent = `[${timestamp}] ${message}`;
+      output.appendChild(line);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    async function startterminalserver() {
+      try {
+        await window.electronapi.startterminalserver();
+      } catch (error) {
+      }
+    }
+
+    window.electronapi.onterminaldata((data) => {
+      appendterminal(data);
+    });
+
+    startterminalserver();
+
+    async function fetchscripts() {
+      const sortby = document.getElementById('sortby').value;
+      const scripttype = document.getElementById('scripttype').value;
+      const verified = document.getElementById('verifiedonly').checked ? '1' : '';
+      const universal = document.getElementById('universalonly').checked ? '1' : '';
+      
+      let url = `https://scriptblox.com/api/script/fetch?page=${currentpage}&sortBy=${sortby}`;
+      if (scripttype) url += `&mode=${scripttype}`;
+      if (verified) url += `&verified=${verified}`;
+      if (universal) url += `&universal=${universal}`;
+      
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.result) {
+          totalpages = data.result.totalPages || 1;
+          displayscripts(data.result.scripts);
+          updatepagination();
+        }
+      } catch (error) {
+      }
+    }
+
+    async function searchscripts() {
+      const query = document.getElementById('searchinput').value.trim();
+      if (!query) {
+        fetchscripts();
+        return;
+      }
+      
+      currentsearchquery = query;
+      const sortby = document.getElementById('sortby').value;
+      const scripttype = document.getElementById('scripttype').value;
+      const verified = document.getElementById('verifiedonly').checked ? '1' : '';
+      const universal = document.getElementById('universalonly').checked ? '1' : '';
+      
+      let url = `https://scriptblox.com/api/script/search?q=${encodeURIComponent(query)}&page=${currentpage}&sortBy=${sortby}`;
+      if (scripttype) url += `&mode=${scripttype}`;
+      if (verified) url += `&verified=${verified}`;
+      if (universal) url += `&universal=${universal}`;
+      
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.result) {
+          totalpages = data.result.totalPages || 1;
+          displayscripts(data.result.scripts);
+          updatepagination();
+        }
+      } catch (error) {
+      }
+    }
+
+    async function fetchtrending() {
+      try {
+        const response = await fetch('https://scriptblox.com/api/script/trending');
+        const data = await response.json();
+        
+        if (data.result) {
+          displayscripts(data.result.scripts);
+          document.getElementById('scriptpagination').style.display = 'none';
+        }
+      } catch (error) {
+      }
+    }
+
+    function displayscripts(scripts) {
+      const scriptlist = document.getElementById('scriptlist');
+      scriptlist.innerHTML = '';
+      
+      scripts.forEach(script => {
+        const card = document.createElement('div');
+        card.className = 'scriptcard';
+        
+        const imageUrl = script.game?.imageUrl || 'file_00000000e9cc61f5bb711020a8abc4c8.webp';
+        
+        card.innerHTML = `
+          <img src="${imageUrl}" onerror="this.src='file_00000000e9cc61f5bb711020a8abc4c8.webp'" alt="${script.game?.name || 'Game'}">
+          <div class="scripttitle">${script.title}</div>
+          <div class="scriptgame">${script.game?.name || 'Universal'}</div>
+          <div class="scriptmeta">
+            ${script.verified ? '<span class="verified">✓ Verified</span>' : ''}
+            <span>${script.views || 0} views</span>
+            ${script.isUniversal ? '<span>Universal</span>' : ''}
+          </div>
+        `;
+        
+        card.addEventListener('click', () => loadscripttotab(script));
+        scriptlist.appendChild(card);
+      });
+    }
+
+    async function loadscripttotab(scriptinfo) {
+      try {
+        const response = await fetch(`https://scriptblox.com/api/script/${scriptinfo.slug}`);
+        const data = await response.json();
+        
+        if (data.script && data.script.script) {
+          createnewtab(scriptinfo.title + '.lua', data.script.script, 'lua');
+          switchview('editor');
+        }
+      } catch (error) {
+      }
+    }
+
+    function changepage(delta) {
+      const newpage = currentpage + delta;
+      if (newpage < 1 || newpage > totalpages) return;
+      
+      currentpage = newpage;
+      if (currentsearchquery) {
+        searchscripts();
+      } else {
+        fetchscripts();
+      }
+    }
+
+    function updatepagination() {
+      document.getElementById('pageinfo').textContent = `Page ${currentpage} of ${totalpages}`;
+      document.getElementById('prevpage').disabled = currentpage === 1;
+      document.getElementById('nextpage').disabled = currentpage === totalpages;
+      document.getElementById('scriptpagination').style.display = 'flex';
+    }
+
+    function createnewtab(name, content, language) {
+      const tabid = Date.now();
+      const tab = {
+        id: tabid,
+        name: name,
+        content: content,
+        language: language,
+        filepath: null
+      };
+      tabs.push(tab);
+      rendertabs();
+      switchtotab(tabid);
+    }
+
+    function rendertabs() {
+      const tabbar = document.getElementById('tabbar');
+      tabbar.innerHTML = '';
+      
+      tabs.forEach(tab => {
+        const tabelement = document.createElement('div');
+        tabelement.className = 'tab' + (tab.id === activetabid ? ' active' : '');
+        tabelement.innerHTML = `
+          <span>${tab.name}</span>
+          <span class="closetab">×</span>
+        `;
+        
+        tabelement.addEventListener('click', (e) => {
+          if (!e.target.classList.contains('closetab')) {
+            switchtotab(tab.id);
+          }
+        });
+        
+        tabelement.querySelector('.closetab').addEventListener('click', (e) => {
+          e.stopPropagation();
+          closetab(tab.id);
+        });
+        
+        tabbar.appendChild(tabelement);
+      });
+
+      const newtabbtn = document.createElement('button');
+      newtabbtn.id = 'newtabbtn';
+      newtabbtn.textContent = '+';
+      newtabbtn.addEventListener('click', () => {
+        createnewtab('untitled.lua', '', 'lua');
+      });
+      tabbar.appendChild(newtabbtn);
+    }
+
+    function switchtotab(tabid) {
+      if (activetabid !== null) {
+        const currenttab = tabs.find(t => t.id === activetabid);
+        if (currenttab) {
+          currenttab.content = editor.getValue();
+        }
+      }
+      
+      const tab = tabs.find(t => t.id === tabid);
+      if (tab) {
+        activetabid = tabid;
+        editor.setValue(tab.content);
+        monaco.editor.setModelLanguage(editor.getModel(), tab.language);
+        rendertabs();
+      }
+    }
+
+    function closetab(tabid) {
+      const index = tabs.findIndex(t => t.id === tabid);
+      if (index === -1) return;
+      
+      tabs.splice(index, 1);
+      
+      if (tabs.length === 0) {
+        createnewtab('untitled.lua', '', 'lua');
+      } else if (activetabid === tabid) {
+        const newtab = tabs[Math.max(0, index - 1)];
+        switchtotab(newtab.id);
+      } else {
+        rendertabs();
+      }
+    }
+
+    function getfilenamefrompat(filepath) {
+      return filepath.split(/[\\/]/).pop();
+    }
+
+    function getlanguagefromfilename(filename) {
+      const ext = filename.split('.').pop().toLowerCase();
+      const langmap = {
+        'lua': 'lua',
+        'js': 'javascript',
+        'ts': 'typescript',
+        'py': 'python',
+        'html': 'html',
+        'css': 'css',
+        'json': 'json',
+        'md': 'markdown',
+        'txt': 'plaintext'
+      };
+      return langmap[ext] || 'lua';
+    }
+
+    function clearhandler() {
+      if (editor && activetabid !== null) {
+        editor.setValue('');
+        const tab = tabs.find(t => t.id === activetabid);
+        if (tab) {
+          tab.content = '';
+        }
+      }
+    }
+
+    async function initializehyperion() {
+      try {
+        await window.electronapi.hyperioninitialize();
+      } catch (error) {
+      }
+    }
+
+    async function attachhandler() {
+      try {
+        const result = await window.electronapi.hyperionattach();
+        if (result.success) {
+          alert('Attached successfully!');
+        } else {
+          alert('Failed to attach: ' + result.error);
+        }
+      } catch (error) {
+        alert('Attach error: ' + error.message);
+      }
+    }
+
+    async function executehandler() {
+      if (editor) {
+        const code = editor.getValue();
+        try {
+          await window.electronapi.hyperionexecute(code);
+        } catch (error) {
+        }
+      }
+    }
+
+    async function openhandler() {
+      try {
+        const result = await window.electronapi.openfile();
+        if (result && result.content) {
+          const filename = getfilenamefrompat(result.filepath);
+          const language = getlanguagefromfilename(filename);
+          
+          const existingtab = tabs.find(t => t.filepath === result.filepath);
+          if (existingtab) {
+            switchtotab(existingtab.id);
+          } else {
+            createnewtab(filename, result.content, language);
+            const tab = tabs.find(t => t.id === activetabid);
+            if (tab) {
+              tab.filepath = result.filepath;
+            }
+          }
+        }
+      } catch (error) {
+      }
+    }
+
+    async function savehandler() {
+      if (editor && activetabid !== null) {
+        const content = editor.getValue();
+        const tab = tabs.find(t => t.id === activetabid);
+        
+        try {
+          const result = await window.electronapi.savefile(content);
+          if (result.success && result.filepath && tab) {
+            tab.filepath = result.filepath;
+            tab.name = getfilenamefrompat(result.filepath);
+            tab.content = content;
+            rendertabs();
+          }
+        } catch (error) {
+        }
+      }
+    }
+  </script>
+</body>
+</html>
