@@ -437,6 +437,248 @@
       height: 14px;
     }
 
+    #gitview,
+    #settingsview,
+    #accountview {
+      background-color: #0d0d15;
+      display: flex;
+      flex-direction: column;
+      color: #b8b8c8;
+    }
+
+    #githeader {
+      background-color: #0a0a12;
+      padding: 14px 16px;
+      border-bottom: 1px solid #2a2a3e;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #gitcontrols {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    #gitpathinput {
+      flex: 1;
+      min-width: 200px;
+      background-color: #15151f;
+      border: 1px solid #3a3a4e;
+      color: #e8e8f8;
+      padding: 6px 10px;
+      border-radius: 3px;
+      font-size: 13px;
+    }
+
+    #gitcontrols button {
+      background-color: #8855cc;
+      color: #ffffff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    #gitcontrols button.secondary {
+      background-color: #15151f;
+      color: #9977dd;
+      border: 1px solid #3a3a4e;
+    }
+
+    #gitmeta {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: #7a7a8a;
+      align-items: center;
+    }
+
+    #gitfilelist {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .gitfile {
+      background-color: #0a0a12;
+      border: 1px solid #2a2a3e;
+      padding: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .gitfile:hover {
+      border-color: #8855cc;
+      background-color: #12121a;
+      box-shadow: 0 0 8px rgba(136, 85, 204, 0.1);
+    }
+
+    .gitfilename {
+      font-size: 13px;
+      color: #e8e8f8;
+      word-break: break-word;
+    }
+
+    .gitfilemeta {
+      font-size: 12px;
+      color: #7a7a8a;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .gitstatusbadge {
+      color: #ffbd2e;
+    }
+
+    #gitempty {
+      padding: 40px;
+      text-align: center;
+      color: #7a7a8a;
+      font-size: 13px;
+    }
+
+    #settingscontent {
+      padding: 20px;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      overflow-y: auto;
+    }
+
+    .settingssection {
+      background-color: #0a0a12;
+      border: 1px solid #2a2a3e;
+      border-radius: 4px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .settingssection h3 {
+      font-size: 14px;
+      color: #e8e8f8;
+    }
+
+    .settingsrow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: #b8b8c8;
+    }
+
+    .settingsrow input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #8855cc;
+    }
+
+    .settingsrow input[type="range"] {
+      flex: 1;
+      margin-left: 12px;
+      accent-color: #8855cc;
+    }
+
+    .settingsvalue {
+      margin-left: 12px;
+      font-size: 12px;
+      color: #7a7a8a;
+    }
+
+    #accountcontent {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      overflow-y: auto;
+    }
+
+    #accountdetails {
+      background-color: #0a0a12;
+      border: 1px solid #2a2a3e;
+      border-radius: 4px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    #accountdetails label {
+      font-size: 12px;
+      color: #7a7a8a;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    #accountdetails input {
+      background-color: #15151f;
+      border: 1px solid #3a3a4e;
+      border-radius: 3px;
+      padding: 8px 10px;
+      color: #e8e8f8;
+      font-size: 13px;
+    }
+
+    #accountdetails button {
+      align-self: flex-start;
+      background-color: #8855cc;
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    #accounthistory {
+      background-color: #0a0a12;
+      border: 1px solid #2a2a3e;
+      border-radius: 4px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+      color: #b8b8c8;
+    }
+
+    #accountstatus {
+      font-size: 12px;
+      color: #7a7a8a;
+    }
+
+    .commititem {
+      background-color: #0d0d15;
+      border: 1px solid #2a2a3e;
+      border-radius: 4px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .commititem strong {
+      color: #e8e8f8;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .commitmeta {
+      font-size: 11px;
+      color: #7a7a8a;
+    }
+
     #clientspanel {
       width: 0;
       background-color: #0d0d15;
@@ -511,6 +753,15 @@
       border-color: #8855cc;
       box-shadow: 0 0 8px rgba(136, 85, 204, 0.15);
       transform: translateX(-2px);
+    }
+
+    .clientempty {
+      color: #7a7a8a;
+      font-size: 12px;
+      padding: 12px;
+      border: 1px dashed #2a2a3e;
+      border-radius: 4px;
+      text-align: center;
     }
 
     .clientitem input[type="checkbox"] {
@@ -677,11 +928,20 @@
   </div>
   <div id="maincontent">
     <div id="sidebar">
-      <button class="sidebaricon active" id="editoricon" title="Editor">
+      <button class="sidebaricon active" id="editoricon" data-view="editor" title="Editor">
         <i data-lucide="code"></i>
       </button>
-      <button class="sidebaricon" id="scripthubicon" title="Script Hub">
+      <button class="sidebaricon" id="scripthubicon" data-view="scripthub" title="Script Hub">
         <i data-lucide="package"></i>
+      </button>
+      <button class="sidebaricon" id="giticon" data-view="git" title="Git">
+        <i data-lucide="git-branch"></i>
+      </button>
+      <button class="sidebaricon" id="settingsicon" data-view="settings" title="Settings">
+        <i data-lucide="sliders"></i>
+      </button>
+      <button class="sidebaricon" id="accounticon" data-view="account" title="Account">
+        <i data-lucide="user"></i>
       </button>
       <button class="sidebaricon" id="clientsicon" title="Connected Clients">
         <i data-lucide="computer"></i>
@@ -696,38 +956,7 @@
           <i data-lucide="computer"></i>
           Connected Clients
         </div>
-        <div id="clientslist">
-          <div class="clientitem">
-            <input type="checkbox" id="client1">
-            <div class="clientinfo">
-              <div class="clientname">Placeholder</div>
-              <div class="clientstatus">
-                <span class="statusdot"></span>
-                Roblox - Connected
-              </div>
-            </div>
-          </div>
-          <div class="clientitem">
-            <input type="checkbox" id="client2">
-            <div class="clientinfo">
-              <div class="clientname">Placeholder</div>
-              <div class="clientstatus">
-                <span class="statusdot"></span>
-                Roblox - Connected
-              </div>
-            </div>
-          </div>
-          <div class="clientitem">
-            <input type="checkbox" id="client3">
-            <div class="clientinfo">
-              <div class="clientname">Placeholder</div>
-              <div class="clientstatus">
-                <span class="statusdot"></span>
-                Roblox - Connected
-              </div>
-            </div>
-          </div>
-        </div>
+        <div id="clientslist"></div>
       </div>
       <div id="editorview" class="view active">
         <div id="tabbar"></div>
@@ -759,6 +988,77 @@
           <button id="prevpage">Previous</button>
           <span id="pageinfo">Page 1</span>
           <button id="nextpage">Next</button>
+        </div>
+      </div>
+      <div id="gitview" class="view">
+        <div id="githeader">
+          <div id="gitcontrols">
+            <input type="text" id="gitpathinput" placeholder="Repository path">
+            <button id="gitbrowsebtn"><i data-lucide="folder-open"></i> Browse</button>
+            <button id="gitrefreshbtn" class="secondary"><i data-lucide="refresh-cw"></i> Refresh</button>
+          </div>
+          <div id="gitmeta">
+            <span id="gitbranch">No repository selected</span>
+            <span id="gitcounts"></span>
+          </div>
+        </div>
+        <div id="gitfilelist"></div>
+        <div id="gitempty" style="display:none;">Select a repository to load tracked files.</div>
+      </div>
+      <div id="settingsview" class="view">
+        <div id="settingscontent">
+          <div class="settingssection">
+            <h3>Editor</h3>
+            <div class="settingsrow">
+              <span>Font size</span>
+              <input type="range" id="settingfontsize" min="10" max="22" step="1">
+              <span class="settingsvalue" id="settingfontsizevalue"></span>
+            </div>
+            <div class="settingsrow">
+              <span>Word wrap</span>
+              <input type="checkbox" id="settingwordwrap">
+            </div>
+            <div class="settingsrow">
+              <span>Minimap</span>
+              <input type="checkbox" id="settingminimap">
+            </div>
+            <div class="settingsrow">
+              <span>Autosave to disk</span>
+              <input type="checkbox" id="settingautosave">
+            </div>
+          </div>
+          <div class="settingssection">
+            <h3>Workspace</h3>
+            <div class="settingsrow">
+              <span>Terminal on start</span>
+              <input type="checkbox" id="settingterminal">
+            </div>
+            <div class="settingsrow">
+              <span>Show client panel</span>
+              <input type="checkbox" id="settingclients">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="accountview" class="view">
+        <div id="accountcontent">
+          <div id="accountdetails">
+            <h3>Git Identity</h3>
+            <label>
+              Name
+              <input type="text" id="accountname">
+            </label>
+            <label>
+              Email
+              <input type="email" id="accountemail">
+            </label>
+            <button id="accountsave">Save</button>
+            <div id="accountstatus"></div>
+          </div>
+          <div id="accounthistory">
+            <h3>Recent Commits</h3>
+            <div id="accountcommits">Open a repository to load commit history.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -812,6 +1112,22 @@
     let totalpages = 1;
     let currentsearchquery = '';
     let currentview = 'editor';
+    let clients = [];
+    let currentgitrepo = '';
+    let gitfiles = [];
+    let gitstatus = [];
+    const defaultsettings = {
+      fontsize: 14,
+      wordwrap: true,
+      minimap: true,
+      autosave: false,
+      terminalonstart: true,
+      showclients: false
+    };
+    let editorsettings = { ...defaultsettings };
+    let autosavetimer = null;
+    let accountinfo = { name: '', email: '' };
+    let commitlog = [];
 
     require.config({ paths: { vs: 'vs' } });
 
@@ -886,15 +1202,17 @@
         }
       });
 
+      loadstoredsettings();
+
       editor = monaco.editor.create(document.getElementById('editorcontainer'), {
         value: '',
         language: 'lua',
         theme: 'xynortheme',
         automaticLayout: true,
-        fontSize: 14,
-        minimap: { enabled: true },
+        fontSize: editorsettings.fontsize,
+        minimap: { enabled: editorsettings.minimap },
         scrollBeyondLastLine: false,
-        wordWrap: 'on',
+        wordWrap: editorsettings.wordwrap ? 'on' : 'off',
         smoothScrolling: true,
         cursorSmoothCaretAnimation: 'on',
         cursorBlinking: 'smooth',
@@ -924,7 +1242,28 @@
         }
       });
 
+      editor.onDidChangeModelContent(() => {
+        if (activetabid === null) return;
+        const tab = tabs.find(t => t.id === activetabid);
+        if (tab) {
+          tab.content = editor.getValue();
+          if (editorsettings.autosave && tab.filepath && window.electronapi && window.electronapi.writefile) {
+            if (autosavetimer) {
+              clearTimeout(autosavetimer);
+            }
+            autosavetimer = setTimeout(() => silentautosave(tab), 1200);
+          }
+        }
+      });
+
       createnewtab('untitled.lua', '', 'lua');
+      renderclients();
+
+      bindsettingscontrols();
+      applysettings();
+      setclientpanelstate(editorsettings.showclients);
+      setterminalstate(editorsettings.terminalonstart);
+      loadaccountinfo();
 
       document.getElementById('clearbtn').addEventListener('click', clearhandler);
       document.getElementById('attachbtn').addEventListener('click', attachhandler);
@@ -935,17 +1274,24 @@
       initializehyperion();
       
       document.getElementById('closebtn').addEventListener('click', () => {
-        window.electronapi.closewindow();
+        if (window.electronapi && window.electronapi.closewindow) {
+          window.electronapi.closewindow();
+        }
       });
       document.getElementById('minimizebtn').addEventListener('click', () => {
-        window.electronapi.minimizewindow();
+        if (window.electronapi && window.electronapi.minimizewindow) {
+          window.electronapi.minimizewindow();
+        }
       });
       document.getElementById('maximizebtn').addEventListener('click', () => {
-        window.electronapi.maximizewindow();
+        if (window.electronapi && window.electronapi.maximizewindow) {
+          window.electronapi.maximizewindow();
+        }
       });
 
-      document.getElementById('editoricon').addEventListener('click', () => switchview('editor'));
-      document.getElementById('scripthubicon').addEventListener('click', () => switchview('scripthub'));
+      document.querySelectorAll('.sidebaricon[data-view]').forEach(button => {
+        button.addEventListener('click', () => switchview(button.dataset.view));
+      });
       document.getElementById('clientsicon').addEventListener('click', toggleclientspanel);
       document.getElementById('terminalicon').addEventListener('click', toggleterminal);
       document.getElementById('clearterminal').addEventListener('click', clearterminaloutput);
@@ -956,22 +1302,44 @@
       document.getElementById('trendingbtn').addEventListener('click', fetchtrending);
       document.getElementById('prevpage').addEventListener('click', () => changepage(-1));
       document.getElementById('nextpage').addEventListener('click', () => changepage(1));
-      
+      document.getElementById('gitbrowsebtn').addEventListener('click', opengitrepository);
+      document.getElementById('gitrefreshbtn').addEventListener('click', refreshgitcontent);
+      document.getElementById('gitpathinput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const value = e.target.value.trim();
+          if (value) {
+            loadgitrepository(value);
+          }
+        }
+      });
+      document.getElementById('gitpathinput').addEventListener('blur', (e) => {
+        const value = e.target.value.trim();
+        if (value && value !== currentgitrepo) {
+          loadgitrepository(value);
+        }
+      });
+      document.getElementById('accountsave').addEventListener('click', saveaccountinfo);
+
       fetchscripts();
     });
 
     function switchview(view) {
       currentview = view;
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      document.getElementById('editoricon').classList.remove('active');
-      document.getElementById('scripthubicon').classList.remove('active');
-      
-      if (view === 'editor') {
-        document.getElementById('editorview').classList.add('active');
-        document.getElementById('editoricon').classList.add('active');
-      } else {
-        document.getElementById('scripthubview').classList.add('active');
-        document.getElementById('scripthubicon').classList.add('active');
+      document.querySelectorAll('.sidebaricon[data-view]').forEach(icon => icon.classList.remove('active'));
+      const viewelement = document.getElementById(view + 'view');
+      if (viewelement) {
+        viewelement.classList.add('active');
+      }
+      const icon = document.getElementById(view + 'icon');
+      if (icon) {
+        icon.classList.add('active');
+      }
+      if (view === 'git' && currentgitrepo) {
+        rendergitfiles();
+      }
+      if (view === 'account') {
+        rendercommitlog();
       }
       lucide.createIcons();
     }
@@ -979,7 +1347,7 @@
     function toggleclientspanel() {
       const panel = document.getElementById('clientspanel');
       const icon = document.getElementById('clientsicon');
-      
+
       if (panel.classList.contains('active')) {
         panel.classList.remove('active');
         icon.classList.remove('active');
@@ -987,14 +1355,52 @@
         panel.classList.add('active');
         icon.classList.add('active');
       }
+      editorsettings.showclients = panel.classList.contains('active');
+      const checkbox = document.getElementById('settingclients');
+      if (checkbox) {
+        checkbox.checked = editorsettings.showclients;
+      }
+      savesettings();
       lucide.createIcons();
+    }
+
+    function renderclients() {
+      const list = document.getElementById('clientslist');
+      if (!list) return;
+      list.innerHTML = '';
+      if (!clients.length) {
+        const empty = document.createElement('div');
+        empty.className = 'clientempty';
+        empty.textContent = 'No clients connected';
+        list.appendChild(empty);
+        return;
+      }
+      clients.forEach(client => {
+        const item = document.createElement('div');
+        item.className = 'clientitem';
+        const info = document.createElement('div');
+        info.className = 'clientinfo';
+        const name = document.createElement('div');
+        name.className = 'clientname';
+        name.textContent = client.name;
+        const status = document.createElement('div');
+        status.className = 'clientstatus';
+        const dot = document.createElement('span');
+        dot.className = 'statusdot';
+        status.appendChild(dot);
+        status.appendChild(document.createTextNode(client.status));
+        info.appendChild(name);
+        info.appendChild(status);
+        item.appendChild(info);
+        list.appendChild(item);
+      });
     }
 
     function toggleterminal() {
       const panel = document.getElementById('terminalpanel');
       const icon = document.getElementById('terminalicon');
       const maincontent = document.getElementById('maincontent');
-      
+
       if (panel.classList.contains('active')) {
         panel.classList.remove('active');
         icon.classList.remove('active');
@@ -1003,6 +1409,53 @@
         panel.classList.add('active');
         icon.classList.add('active');
         maincontent.classList.add('withterminal');
+      }
+      editorsettings.terminalonstart = panel.classList.contains('active');
+      const checkbox = document.getElementById('settingterminal');
+      if (checkbox) {
+        checkbox.checked = editorsettings.terminalonstart;
+      }
+      savesettings();
+      lucide.createIcons();
+    }
+
+    function setclientpanelstate(enabled) {
+      const panel = document.getElementById('clientspanel');
+      const icon = document.getElementById('clientsicon');
+      if (!panel || !icon) return;
+      if (enabled) {
+        panel.classList.add('active');
+        icon.classList.add('active');
+      } else {
+        panel.classList.remove('active');
+        icon.classList.remove('active');
+      }
+      editorsettings.showclients = enabled;
+      const checkbox = document.getElementById('settingclients');
+      if (checkbox) {
+        checkbox.checked = enabled;
+      }
+      lucide.createIcons();
+    }
+
+    function setterminalstate(enabled) {
+      const panel = document.getElementById('terminalpanel');
+      const icon = document.getElementById('terminalicon');
+      const maincontent = document.getElementById('maincontent');
+      if (!panel || !icon || !maincontent) return;
+      if (enabled) {
+        panel.classList.add('active');
+        icon.classList.add('active');
+        maincontent.classList.add('withterminal');
+      } else {
+        panel.classList.remove('active');
+        icon.classList.remove('active');
+        maincontent.classList.remove('withterminal');
+      }
+      editorsettings.terminalonstart = enabled;
+      const checkbox = document.getElementById('settingterminal');
+      if (checkbox) {
+        checkbox.checked = enabled;
       }
       lucide.createIcons();
     }
@@ -1025,16 +1478,429 @@
       output.scrollTop = output.scrollHeight;
     }
 
-    async function startterminalserver() {
+    function loadstoredsettings() {
       try {
-        await window.electronapi.startterminalserver();
+        const stored = localStorage.getItem('xynor-settings');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          editorsettings = { ...defaultsettings, ...parsed };
+        }
+      } catch (error) {
+        editorsettings = { ...defaultsettings };
+      }
+    }
+
+    function savesettings() {
+      try {
+        localStorage.setItem('xynor-settings', JSON.stringify(editorsettings));
       } catch (error) {
       }
     }
 
-    window.electronapi.onterminaldata((data) => {
-      appendterminal(data);
-    });
+    function applysettings() {
+      if (!editor) return;
+      editor.updateOptions({
+        fontSize: editorsettings.fontsize,
+        wordWrap: editorsettings.wordwrap ? 'on' : 'off',
+        minimap: { enabled: editorsettings.minimap }
+      });
+    }
+
+    function bindsettingscontrols() {
+      const fontsize = document.getElementById('settingfontsize');
+      const fontsizevalue = document.getElementById('settingfontsizevalue');
+      if (fontsize && fontsizevalue) {
+        fontsize.value = editorsettings.fontsize;
+        fontsizevalue.textContent = editorsettings.fontsize + 'px';
+        fontsize.addEventListener('input', () => {
+          editorsettings.fontsize = parseInt(fontsize.value, 10);
+          fontsizevalue.textContent = editorsettings.fontsize + 'px';
+          applysettings();
+          savesettings();
+        });
+      }
+
+      const wordwrap = document.getElementById('settingwordwrap');
+      if (wordwrap) {
+        wordwrap.checked = editorsettings.wordwrap;
+        wordwrap.addEventListener('change', () => {
+          editorsettings.wordwrap = wordwrap.checked;
+          applysettings();
+          savesettings();
+        });
+      }
+
+      const minimap = document.getElementById('settingminimap');
+      if (minimap) {
+        minimap.checked = editorsettings.minimap;
+        minimap.addEventListener('change', () => {
+          editorsettings.minimap = minimap.checked;
+          applysettings();
+          savesettings();
+        });
+      }
+
+      const autosave = document.getElementById('settingautosave');
+      if (autosave) {
+        autosave.checked = editorsettings.autosave;
+        autosave.addEventListener('change', () => {
+          editorsettings.autosave = autosave.checked;
+          savesettings();
+        });
+      }
+
+      const terminal = document.getElementById('settingterminal');
+      if (terminal) {
+        terminal.checked = editorsettings.terminalonstart;
+        terminal.addEventListener('change', () => {
+          setterminalstate(terminal.checked);
+          savesettings();
+        });
+      }
+
+      const clientscheckbox = document.getElementById('settingclients');
+      if (clientscheckbox) {
+        clientscheckbox.checked = editorsettings.showclients;
+        clientscheckbox.addEventListener('change', () => {
+          setclientpanelstate(clientscheckbox.checked);
+          savesettings();
+        });
+      }
+    }
+
+    async function silentautosave(tab) {
+      if (!window.electronapi || !window.electronapi.writefile) return;
+      try {
+        await window.electronapi.writefile(tab.filepath, tab.content);
+        appendterminal('Autosaved ' + tab.filepath, 'info');
+      } catch (error) {
+        appendterminal('Autosave failed: ' + error.message, 'error');
+      }
+    }
+
+    async function opengitrepository() {
+      if (!window.electronapi || !window.electronapi.opengitrepo) {
+        appendterminal('Repository picker unavailable', 'error');
+        return;
+      }
+      try {
+        const result = await window.electronapi.opengitrepo();
+        if (result && result.path) {
+          switchview('git');
+          await loadgitrepository(result.path);
+        }
+      } catch (error) {
+        appendterminal('Select repository failed: ' + error.message, 'error');
+      }
+    }
+
+    async function refreshgitcontent() {
+      const input = document.getElementById('gitpathinput');
+      if (!currentgitrepo && input) {
+        currentgitrepo = input.value.trim();
+      }
+      if (!currentgitrepo) {
+        appendterminal('Enter a repository path first', 'info');
+        return;
+      }
+      await loadgitrepository(currentgitrepo);
+    }
+
+    async function loadgitrepository(path) {
+      const input = document.getElementById('gitpathinput');
+      if (input) {
+        input.value = path;
+      }
+      const empty = document.getElementById('gitempty');
+      if (empty) {
+        empty.style.display = 'block';
+        empty.textContent = 'Loading repository...';
+      }
+      if (!window.electronapi || !window.electronapi.listgitfiles) {
+        appendterminal('Git integration unavailable', 'error');
+        return;
+      }
+      try {
+        const result = await window.electronapi.listgitfiles(path);
+        if (result && result.success) {
+          currentgitrepo = path;
+          gitfiles = result.files || [];
+          gitstatus = result.status || [];
+          rendergitfiles();
+          updategitmeta(result.branch || '');
+          await refreshcommits();
+          appendterminal('Loaded repository ' + path, 'info');
+        } else if (result && result.error) {
+          appendterminal('Git load failed: ' + result.error, 'error');
+          currentgitrepo = '';
+          gitfiles = [];
+          gitstatus = [];
+          rendergitfiles();
+          updategitmeta('');
+          await refreshcommits();
+        }
+      } catch (error) {
+        appendterminal('Git load failed: ' + error.message, 'error');
+        currentgitrepo = '';
+        gitfiles = [];
+        gitstatus = [];
+        rendergitfiles();
+        updategitmeta('');
+        await refreshcommits();
+      }
+    }
+
+    function rendergitfiles() {
+      const list = document.getElementById('gitfilelist');
+      const empty = document.getElementById('gitempty');
+      if (!list || !empty) return;
+      list.innerHTML = '';
+      if (!currentgitrepo) {
+        empty.style.display = 'block';
+        empty.textContent = 'Select a repository to load tracked files.';
+        return;
+      }
+      if (!gitfiles.length) {
+        empty.style.display = 'block';
+        empty.textContent = 'Repository has no tracked files.';
+        return;
+      }
+      empty.style.display = 'none';
+      gitfiles.forEach(file => {
+        const item = document.createElement('div');
+        item.className = 'gitfile';
+        const name = document.createElement('div');
+        name.className = 'gitfilename';
+        name.textContent = file.path;
+        const meta = document.createElement('div');
+        meta.className = 'gitfilemeta';
+        const size = document.createElement('span');
+        size.textContent = formatfilesize(file.size);
+        meta.appendChild(size);
+        const status = gitstatuslabel(file.path);
+        if (status) {
+          const badge = document.createElement('span');
+          badge.className = 'gitstatusbadge';
+          badge.textContent = status;
+          meta.appendChild(badge);
+        }
+        item.appendChild(name);
+        item.appendChild(meta);
+        item.addEventListener('click', () => openrepofile(file.path));
+        list.appendChild(item);
+      });
+    }
+
+    function formatfilesize(bytes) {
+      if (bytes === 0) return '0 B';
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function gitstatuslabel(filepath) {
+      const entry = gitstatus.find(item => item.path === filepath);
+      if (!entry) return '';
+      const code = entry.status.trim();
+      const map = {
+        'M': 'Modified',
+        'A': 'Added',
+        'D': 'Deleted',
+        'R': 'Renamed',
+        'C': 'Copied',
+        '??': 'Untracked',
+        'UU': 'Conflict'
+      };
+      if (map[code]) {
+        return map[code];
+      }
+      if (code.includes('M')) return 'Modified';
+      if (code.includes('A')) return 'Added';
+      if (code.includes('?')) return 'Untracked';
+      return code;
+    }
+
+    function updategitmeta(branch) {
+      const branchlabel = document.getElementById('gitbranch');
+      if (branchlabel) {
+        if (currentgitrepo && branch) {
+          branchlabel.textContent = 'Branch: ' + branch;
+        } else if (currentgitrepo) {
+          branchlabel.textContent = 'Branch: unknown';
+        } else {
+          branchlabel.textContent = 'No repository selected';
+        }
+      }
+      const countslabel = document.getElementById('gitcounts');
+      if (countslabel) {
+        if (!currentgitrepo || !gitfiles.length) {
+          countslabel.textContent = '';
+        } else {
+          const modified = gitstatus.filter(item => item.status.includes('M')).length;
+          const pending = gitstatus.filter(item => item.status.includes('A') || item.status.includes('?')).length;
+          countslabel.textContent = `${gitfiles.length} tracked • ${modified} modified • ${pending} pending`;
+        }
+      }
+    }
+
+    async function openrepofile(relativepath) {
+      if (!currentgitrepo) return;
+      if (!window.electronapi || !window.electronapi.readgitfile) {
+        appendterminal('Git read unavailable', 'error');
+        return;
+      }
+      try {
+        const result = await window.electronapi.readgitfile(currentgitrepo, relativepath);
+        if (result && result.success) {
+          const filename = getfilenamefrompat(result.filepath);
+          const language = getlanguagefromfilename(filename);
+          const existing = tabs.find(t => t.filepath === result.filepath);
+          if (existing) {
+            existing.content = result.content;
+            switchtotab(existing.id);
+            editor.setValue(result.content);
+          } else {
+            createnewtab(filename, result.content, language);
+            const tab = tabs.find(t => t.id === activetabid);
+            if (tab) {
+              tab.filepath = result.filepath;
+              tab.content = result.content;
+            }
+          }
+          appendterminal('Opened ' + result.filepath, 'info');
+          switchview('editor');
+        } else if (result && result.error) {
+          appendterminal('Read failed: ' + result.error, 'error');
+        }
+      } catch (error) {
+        appendterminal('Read failed: ' + error.message, 'error');
+      }
+    }
+
+    async function refreshcommits() {
+      const container = document.getElementById('accountcommits');
+      if (!currentgitrepo || !window.electronapi || !window.electronapi.gitlog) {
+        commitlog = [];
+        if (container) {
+          container.textContent = currentgitrepo ? 'Git log unavailable.' : 'Open a repository to load commit history.';
+        }
+        return;
+      }
+      try {
+        const result = await window.electronapi.gitlog(currentgitrepo, 6);
+        if (result && result.success) {
+          commitlog = result.commits || [];
+        } else if (result && result.error) {
+          commitlog = [];
+          appendterminal('Git log failed: ' + result.error, 'error');
+        }
+      } catch (error) {
+        commitlog = [];
+        appendterminal('Git log failed: ' + error.message, 'error');
+      }
+      rendercommitlog();
+    }
+
+    function rendercommitlog() {
+      const container = document.getElementById('accountcommits');
+      if (!container) return;
+      container.innerHTML = '';
+      if (!currentgitrepo) {
+        container.textContent = 'Open a repository to load commit history.';
+        return;
+      }
+      if (!commitlog.length) {
+        container.textContent = 'No commits found.';
+        return;
+      }
+      commitlog.forEach(entry => {
+        const item = document.createElement('div');
+        item.className = 'commititem';
+        const header = document.createElement('div');
+        const hash = document.createElement('strong');
+        hash.textContent = entry.hash;
+        header.appendChild(hash);
+        const message = document.createElement('span');
+        message.textContent = ' ' + entry.message;
+        header.appendChild(message);
+        const meta = document.createElement('div');
+        meta.className = 'commitmeta';
+        meta.textContent = `${entry.date} • ${entry.author}`;
+        item.appendChild(header);
+        item.appendChild(meta);
+        container.appendChild(item);
+      });
+    }
+
+    async function loadaccountinfo() {
+      const nameinput = document.getElementById('accountname');
+      const emailinput = document.getElementById('accountemail');
+      const status = document.getElementById('accountstatus');
+      if (!window.electronapi || !window.electronapi.getgituser) {
+        if (status) {
+          status.textContent = 'Git integration unavailable.';
+        }
+        return;
+      }
+      try {
+        const result = await window.electronapi.getgituser();
+        if (result && result.success) {
+          accountinfo = {
+            name: result.name || '',
+            email: result.email || ''
+          };
+          if (nameinput) nameinput.value = accountinfo.name;
+          if (emailinput) emailinput.value = accountinfo.email;
+          if (status) status.textContent = 'Loaded git identity.';
+        } else if (result && result.error) {
+          if (status) status.textContent = result.error;
+        }
+      } catch (error) {
+        if (status) status.textContent = 'Failed to load git identity: ' + error.message;
+      }
+    }
+
+    async function saveaccountinfo() {
+      const nameinput = document.getElementById('accountname');
+      const emailinput = document.getElementById('accountemail');
+      const status = document.getElementById('accountstatus');
+      if (!nameinput || !emailinput) return;
+      if (!window.electronapi || !window.electronapi.setgituser) {
+        if (status) status.textContent = 'Git integration unavailable.';
+        return;
+      }
+      const name = nameinput.value.trim();
+      const email = emailinput.value.trim();
+      try {
+        const result = await window.electronapi.setgituser(name, email);
+        if (result && result.success) {
+          accountinfo = { name, email };
+          if (status) status.textContent = 'Saved git identity.';
+        } else if (result && result.error) {
+          if (status) status.textContent = result.error;
+        }
+      } catch (error) {
+        if (status) status.textContent = 'Save failed: ' + error.message;
+      }
+    }
+
+    async function startterminalserver() {
+      if (!window.electronapi || !window.electronapi.startterminalserver) {
+        appendterminal('Terminal bridge unavailable', 'info');
+        return;
+      }
+      try {
+        await window.electronapi.startterminalserver();
+      } catch (error) {
+        appendterminal('Terminal error: ' + error.message, 'error');
+      }
+    }
+
+    if (window.electronapi && window.electronapi.onterminaldata) {
+      window.electronapi.onterminaldata((data) => {
+        appendterminal(data);
+      });
+    }
 
     startterminalserver();
 
@@ -1267,82 +2133,145 @@
     }
 
     function clearhandler() {
-      if (editor && activetabid !== null) {
-        editor.setValue('');
-        const tab = tabs.find(t => t.id === activetabid);
-        if (tab) {
-          tab.content = '';
-        }
+      if (!editor || activetabid === null) return;
+      editor.setValue('');
+      const tab = tabs.find(t => t.id === activetabid);
+      if (tab) {
+        tab.content = '';
       }
+      appendterminal('Editor cleared', 'info');
     }
 
     async function initializehyperion() {
+      if (!window.electronapi || !window.electronapi.hyperioninitialize) {
+        appendterminal('Executor bridge unavailable', 'info');
+        return;
+      }
       try {
         await window.electronapi.hyperioninitialize();
+        appendterminal('Executor initialized', 'info');
       } catch (error) {
+        appendterminal('Initialize error: ' + error.message, 'error');
       }
     }
 
     async function attachhandler() {
+      if (!window.electronapi || !window.electronapi.hyperionattach) {
+        appendterminal('Attach bridge unavailable', 'error');
+        return;
+      }
       try {
         const result = await window.electronapi.hyperionattach();
-        if (result.success) {
-          alert('Attached successfully!');
+        if (result && result.success) {
+          const label = result.client || 'Roblox Client';
+          const timestamp = new Date().toLocaleTimeString();
+          const existing = clients.find(client => client.name === label);
+          if (existing) {
+            existing.status = 'Connected at ' + timestamp;
+          } else {
+            clients.push({ name: label, status: 'Connected at ' + timestamp });
+          }
+          renderclients();
+          appendterminal('Attached to ' + label, 'success');
         } else {
-          alert('Failed to attach: ' + result.error);
+          const message = result && result.error ? result.error : 'Attach failed';
+          appendterminal('Attach failed: ' + message, 'error');
         }
       } catch (error) {
-        alert('Attach error: ' + error.message);
+        appendterminal('Attach error: ' + error.message, 'error');
       }
     }
 
     async function executehandler() {
-      if (editor) {
-        const code = editor.getValue();
-        try {
-          await window.electronapi.hyperionexecute(code);
-        } catch (error) {
-        }
+      if (!editor) return;
+      if (!window.electronapi || !window.electronapi.hyperionexecute) {
+        appendterminal('Execute bridge unavailable', 'error');
+        return;
+      }
+      const code = editor.getValue();
+      try {
+        await window.electronapi.hyperionexecute(code);
+        appendterminal('Script sent to executor', 'success');
+      } catch (error) {
+        appendterminal('Execution failed: ' + error.message, 'error');
       }
     }
 
     async function openhandler() {
+      if (!window.electronapi || !window.electronapi.openfile) {
+        appendterminal('Open bridge unavailable', 'error');
+        return;
+      }
       try {
         const result = await window.electronapi.openfile();
         if (result && result.content) {
           const filename = getfilenamefrompat(result.filepath);
           const language = getlanguagefromfilename(filename);
-          
+
           const existingtab = tabs.find(t => t.filepath === result.filepath);
           if (existingtab) {
+            existingtab.content = result.content;
             switchtotab(existingtab.id);
+            editor.setValue(result.content);
           } else {
             createnewtab(filename, result.content, language);
             const tab = tabs.find(t => t.id === activetabid);
             if (tab) {
               tab.filepath = result.filepath;
+              tab.content = result.content;
             }
           }
+          appendterminal('Opened ' + (result.filepath || filename), 'info');
         }
       } catch (error) {
+        appendterminal('Open failed: ' + error.message, 'error');
       }
     }
 
     async function savehandler() {
-      if (editor && activetabid !== null) {
-        const content = editor.getValue();
-        const tab = tabs.find(t => t.id === activetabid);
-        
+      if (!editor || activetabid === null) return;
+      const content = editor.getValue();
+      const tab = tabs.find(t => t.id === activetabid);
+      if (!tab) return;
+
+      if (tab.filepath && window.electronapi && window.electronapi.writefile) {
         try {
-          const result = await window.electronapi.savefile(content);
-          if (result.success && result.filepath && tab) {
-            tab.filepath = result.filepath;
-            tab.name = getfilenamefrompat(result.filepath);
+          const direct = await window.electronapi.writefile(tab.filepath, content);
+          if (direct && direct.success) {
             tab.content = content;
+            tab.name = getfilenamefrompat(tab.filepath);
             rendertabs();
+            appendterminal('Saved ' + tab.filepath, 'success');
+            return;
+          }
+          if (direct && direct.error) {
+            appendterminal('Save failed: ' + direct.error, 'error');
+            return;
           }
         } catch (error) {
+          appendterminal('Save failed: ' + error.message, 'error');
+          return;
         }
+      }
+
+      if (!window.electronapi || !window.electronapi.savefile) {
+        appendterminal('Save bridge unavailable', 'error');
+        return;
+      }
+
+      try {
+        const result = await window.electronapi.savefile(content);
+        if (result && result.success && result.filepath) {
+          tab.filepath = result.filepath;
+          tab.name = getfilenamefrompat(result.filepath);
+          tab.content = content;
+          rendertabs();
+          appendterminal('Saved ' + result.filepath, 'success');
+        } else {
+          appendterminal('Save failed', 'error');
+        }
+      } catch (error) {
+        appendterminal('Save failed: ' + error.message, 'error');
       }
     }
   </script>
